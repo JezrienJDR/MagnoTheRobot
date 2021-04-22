@@ -1,0 +1,185 @@
+{
+    "name": "magnCons",
+    "maps": [
+        {
+            "name": "magnoMap",
+            "id": "8ff166ee-80bf-4fb3-ab58-0eeb77211894",
+            "actions": [
+                {
+                    "name": "Forward",
+                    "type": "Button",
+                    "id": "95f2ac0a-be95-4f72-a844-5486d5bdba56",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press(behavior=2)"
+                },
+                {
+                    "name": "Back",
+                    "type": "Button",
+                    "id": "6f0f5295-5c23-478a-85e9-c6895260529a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press(behavior=2)"
+                },
+                {
+                    "name": "TurnLeft",
+                    "type": "Button",
+                    "id": "8ec75448-6267-4cb0-b09d-31aa3fa9c69c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press(behavior=2)"
+                },
+                {
+                    "name": "TurnRight",
+                    "type": "Button",
+                    "id": "25c56d2d-323e-4f93-a767-11025a3440f9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press(behavior=2)"
+                },
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "eeb463a6-f746-4370-903c-b26d45128ab6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Push",
+                    "type": "Button",
+                    "id": "ac1fe777-8358-444e-81e4-6fb3ff34f36e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press(behavior=2)"
+                },
+                {
+                    "name": "Pull",
+                    "type": "Button",
+                    "id": "a8ae81e5-4b0f-4a5e-ab46-64ea0ef0fbb5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press(behavior=2)"
+                },
+                {
+                    "name": "Lock",
+                    "type": "Button",
+                    "id": "e32a1313-2b5b-40d4-91f7-ad4c7f32a4cc",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press(behavior=2)"
+                },
+                {
+                    "name": "LookUp",
+                    "type": "Value",
+                    "id": "28fe921b-f1e9-439f-bb27-3fe809c85ff1",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "a3d5821a-3c86-48a2-8c5c-1a28475754af",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Forward",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "42147aa4-2b3c-4ec7-bab7-93056b44ffa2",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Back",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8c7b4710-d6a4-4c33-ab32-15354baef9dd",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TurnLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1ccd4d35-8057-4849-bd39-d1d07b9846a2",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TurnRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "25400e2c-f985-4f50-8f0c-67f9b15d632f",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "675745f9-4b6a-409e-aef8-5b539fc977ce",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "Press(behavior=2)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Push",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "62578326-ae6d-4e35-bced-6aad2a237bd7",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pull",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "de30a325-d7e5-4a65-8574-52d31f85f785",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Lock",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1fa3ca32-3e72-49db-802e-dd85e8a231f8",
+                    "path": "<Mouse>/delta/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LookUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
