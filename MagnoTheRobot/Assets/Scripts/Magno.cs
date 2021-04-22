@@ -9,22 +9,45 @@ public class Magno : MonoBehaviour
     public float walkSpeed;
     public float turnSpeed;
     public float lookSpeed;
-    public Transform camHolder;   
-
+    public Transform camHolder;
+    public LayerMask groundMask;
     private Animator animr;
     private Camera cam;
+
 
     // Movement Control Bools
     private bool forward;
     private bool backward;
+    private bool left;
+    private bool right;
     private bool turnLeft;
     private bool turnRight;
+    private bool onGround;
 
+    private MetalItem target;
+    int targetID;
+
+    private float mass;
+    private Rigidbody rb;
+    private CapsuleCollider cap;
+
+    // Allomancy variables
+    private bool pushing;
+    private bool pulling;
+    private float pushForce;
+    private float pullForce;
+    public float basePushForce;
+    public float basePullForce;
 
     private void Awake()
     {
         animr = GetComponent<Animator>();
         cam = FindObjectOfType<Camera>();
+
+        rb = GetComponent<Rigidbody>();
+        mass = rb.mass;
+
+        cap = GetComponent<CapsuleCollider>();
     }
 
     // Start is called before the first frame update
@@ -36,19 +59,44 @@ public class Magno : MonoBehaviour
         }
         if(turnSpeed == 0)
         {
-            turnSpeed = 360;
+            turnSpeed = 180;
         }
         if(lookSpeed == 0)
         {
-            lookSpeed = 20;
+            lookSpeed = 30;
         }
 
+        targetID = 9002;
+
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
     void Update()
     {
         ApplyMotion();
+        ScanAhead();
+        Allomancy();
+        GroundCheck();
+    }
+
+    private void GroundCheck()
+    {
+        RaycastHit hit;
+        if (Physics.BoxCast(transform.position + new Vector3(0,1,0), new Vector3(0.5f, 0.5f, 0.5f), Vector3.down, out hit, Quaternion.identity, 1.0f, groundMask))
+        {
+            onGround = true;
+        }
+        else
+        {
+            onGround = false;
+        }
+
+        Debug.DrawLine(transform.position  + new Vector3(0,1,0), transform.position + Vector3.down * 30);
+
+
+        animr.SetBool("air", !onGround);
+        Debug.Log(onGround);
     }
 
     private void ApplyMotion()
@@ -61,9 +109,20 @@ public class Magno : MonoBehaviour
         {
             transform.position += transform.forward * Time.deltaTime * -walkSpeed;
         }
+        else if(left)
+        {
+            transform.position += transform.right * Time.deltaTime * -walkSpeed;
+        }
+        else if(right)
+        {
+            transform.position += transform.right * Time.deltaTime * walkSpeed;
+        }
 
-        animr.SetBool("walk", forward);
+        animr.SetBool("walkForward", forward);
         animr.SetBool("walkBack", backward);
+        animr.SetBool("walkLeft", left);
+        animr.SetBool("walkRight", right);
+
 
         if (turnLeft)
         {
@@ -75,12 +134,71 @@ public class Magno : MonoBehaviour
         }
     }
 
+    private void Allomancy()
+    {
+        if (targetID == 9002)
+        {
+            //Debug.Log("NO TARGET");
+            return;
+        }
+
+        float magnitude = 0.0f;
+
+        if(pushing)
+        {
+            magnitude = basePushForce;
+        }
+        else if(pulling)
+        {
+            magnitude = basePullForce;
+        }
+
+        if(mass > target.GetMass())
+        {
+            Vector3 f = Vector3.Normalize(transform.position - target.transform.position) * magnitude;
+
+            target.ApplyForce(f);
+        }
+        else if(mass < target.GetMass())
+        {
+            Vector3 f = Vector3.Normalize(target.transform.position - transform.position) * magnitude * 150;
+
+            rb.AddForce(f);
+        }
+    }
 
     private void ScanAhead()
     {
-        //cam.Scr
+        
+        Ray ray = cam.ScreenPointToRay(new Vector2(Screen.width / 2, Screen.height / 2));
+        RaycastHit hit;
+
+        Debug.DrawRay(ray.origin, ray.direction * 10, Color.red);
+
+        if(Physics.Raycast(ray, out hit))
+        {
+            if(hit.transform.CompareTag("Metal"))
+            {
+                //Debug.Log("TARGET ACQUIRED");
+                SetTarget(hit.transform.GetComponent<MetalItem>());
+            }
+        }
     }
 
+    private void SetTarget(MetalItem t)
+    {
+        if(target != null && t.GetID() != targetID)
+        {
+            target.FadeGlow();
+        }
+
+        if (t.GetID() != targetID)
+        {
+            target = t;
+            targetID = target.GetID();
+            target.ShowGlow();
+        }
+    }
 
     public void OnForward(InputValue val)
     {
@@ -110,24 +228,24 @@ public class Magno : MonoBehaviour
     {
         if(val.isPressed)
         {
-            turnLeft = true;
-            turnRight = false;
+            left = true;
+            right = false;
         }
         else
         {
-            turnLeft = false;
+            left = false;
         }
     }
     public void OnTurnRight(InputValue val)
     {
         if(val.isPressed)
         {
-            turnRight = true;
-            turnLeft = false;
+            right = true;
+            left = false;
         }
         else
         {
-            turnRight = false;
+            right = false;
         }
     }
     public void OnPause(InputValue val)
@@ -136,11 +254,29 @@ public class Magno : MonoBehaviour
     }
     public void OnPush(InputValue val)
     {
-
+        //Debug.Log("PUSHING!");
+        if(val.isPressed == true)
+        {
+            pushing = true;
+        }
+        else
+        {
+            pushing = false;
+            pushForce = 0.0f;
+        }
+           
     }
     public void OnPull(InputValue val)
     {
-
+        if (val.isPressed == true)
+        {
+            pulling = true;
+        }
+        else
+        {
+            pulling = false;
+            pullForce = 0.0f;
+        }
     }
     public void OnLock(InputValue val)
     {
@@ -154,7 +290,7 @@ public class Magno : MonoBehaviour
 
         float x = camHolder.rotation.eulerAngles.x;
 
-        Debug.Log(x);
+        //Debug.Log(x);
 
         //else if (x < -30)
         //{
@@ -165,25 +301,42 @@ public class Magno : MonoBehaviour
 
         if (rotator > 0)
         {
-            Debug.Log("Mouse Down");
-            if (x > 30 && x < 300)
+            //Debug.Log("Mouse Down");
+            if (x > 60 && x < 300)
             {
-                float delta = 30 - x;
+                float delta = 60 - x;
                 camHolder.Rotate(delta, 0, 0);
-                Debug.Log("Over 30");
+                //Debug.Log("Over 30");
             }
         }
         if (rotator < 0)
         {
-            Debug.Log("Mouse Up");
-            if (x > 30 && x < 300)
+            //Debug.Log("Mouse Up");
+            if (x > 60 && x < 300)
             {
                 float delta = 300 - x;
                 camHolder.Rotate(delta, 0, 0);
-                Debug.Log("Under MINUS 30");
+                //Debug.Log("Under MINUS 30");
             }
         }
 
     }
-
+    public void OnLookX(InputValue val)
+    {
+        if(val.Get<float>() > 0)
+        {
+            turnRight = true;
+            turnLeft = false;
+        }
+        else if(val.Get<float>() < 0)
+        {
+            turnLeft = true;
+            turnRight = false;
+        }
+        else
+        {
+            turnLeft = false;
+            turnRight = false;
+        }
+    }
 }

@@ -89,6 +89,14 @@ public class @MagnCons : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Axis"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""LookX"",
+                    ""type"": ""Value"",
+                    ""id"": ""e1c4e3ba-a90b-49f0-909a-0b66bf938709"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -190,6 +198,17 @@ public class @MagnCons : IInputActionCollection, IDisposable
                     ""action"": ""LookUp"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""30d42341-8941-469d-8054-03175c076239"",
+                    ""path"": ""<Mouse>/delta/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LookX"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -207,6 +226,7 @@ public class @MagnCons : IInputActionCollection, IDisposable
         m_magnoMap_Pull = m_magnoMap.FindAction("Pull", throwIfNotFound: true);
         m_magnoMap_Lock = m_magnoMap.FindAction("Lock", throwIfNotFound: true);
         m_magnoMap_LookUp = m_magnoMap.FindAction("LookUp", throwIfNotFound: true);
+        m_magnoMap_LookX = m_magnoMap.FindAction("LookX", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -265,6 +285,7 @@ public class @MagnCons : IInputActionCollection, IDisposable
     private readonly InputAction m_magnoMap_Pull;
     private readonly InputAction m_magnoMap_Lock;
     private readonly InputAction m_magnoMap_LookUp;
+    private readonly InputAction m_magnoMap_LookX;
     public struct MagnoMapActions
     {
         private @MagnCons m_Wrapper;
@@ -278,6 +299,7 @@ public class @MagnCons : IInputActionCollection, IDisposable
         public InputAction @Pull => m_Wrapper.m_magnoMap_Pull;
         public InputAction @Lock => m_Wrapper.m_magnoMap_Lock;
         public InputAction @LookUp => m_Wrapper.m_magnoMap_LookUp;
+        public InputAction @LookX => m_Wrapper.m_magnoMap_LookX;
         public InputActionMap Get() { return m_Wrapper.m_magnoMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -314,6 +336,9 @@ public class @MagnCons : IInputActionCollection, IDisposable
                 @LookUp.started -= m_Wrapper.m_MagnoMapActionsCallbackInterface.OnLookUp;
                 @LookUp.performed -= m_Wrapper.m_MagnoMapActionsCallbackInterface.OnLookUp;
                 @LookUp.canceled -= m_Wrapper.m_MagnoMapActionsCallbackInterface.OnLookUp;
+                @LookX.started -= m_Wrapper.m_MagnoMapActionsCallbackInterface.OnLookX;
+                @LookX.performed -= m_Wrapper.m_MagnoMapActionsCallbackInterface.OnLookX;
+                @LookX.canceled -= m_Wrapper.m_MagnoMapActionsCallbackInterface.OnLookX;
             }
             m_Wrapper.m_MagnoMapActionsCallbackInterface = instance;
             if (instance != null)
@@ -345,6 +370,9 @@ public class @MagnCons : IInputActionCollection, IDisposable
                 @LookUp.started += instance.OnLookUp;
                 @LookUp.performed += instance.OnLookUp;
                 @LookUp.canceled += instance.OnLookUp;
+                @LookX.started += instance.OnLookX;
+                @LookX.performed += instance.OnLookX;
+                @LookX.canceled += instance.OnLookX;
             }
         }
     }
@@ -360,5 +388,6 @@ public class @MagnCons : IInputActionCollection, IDisposable
         void OnPull(InputAction.CallbackContext context);
         void OnLock(InputAction.CallbackContext context);
         void OnLookUp(InputAction.CallbackContext context);
+        void OnLookX(InputAction.CallbackContext context);
     }
 }
