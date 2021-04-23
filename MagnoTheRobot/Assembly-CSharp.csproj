@@ -62,8 +62,9 @@
     <Compile Include="Assets\Scripts\Door.cs" />
     <Compile Include="Assets\Scripts\Magno.cs" />
     <Compile Include="Assets\Scripts\PuzzleController1.cs" />
-    <Compile Include="Assets\magnCons.cs" />
     <Compile Include="Assets\Scripts\Snake.cs" />
+    <Compile Include="Assets\magnCons.cs" />
+    <Compile Include="Assets\Scripts\MusicManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

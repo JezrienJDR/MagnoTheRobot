@@ -9,7 +9,9 @@ public class Door : MonoBehaviour
 
     public Transform leftDoor;
     public Transform rightDoor;
-    
+
+    private AudioSource audSrc;
+
     public void Open()
     {
         if (!isOpen)
@@ -17,6 +19,11 @@ public class Door : MonoBehaviour
             isOpen = true;
             StartCoroutine("Opening");
             box.enabled = false;
+
+            if(audSrc != null)
+            {
+                audSrc.Play();
+            }
         }
     }
 
@@ -27,6 +34,12 @@ public class Door : MonoBehaviour
             isOpen = false;
             StartCoroutine("Closing");
             box.enabled = true;
+
+
+            if (audSrc != null)
+            {
+                audSrc.Play();
+            }
         }
     }
     
@@ -77,6 +90,8 @@ public class Door : MonoBehaviour
     void Start()
     {
         box = GetComponent<BoxCollider>();
+
+        audSrc = GetComponent<AudioSource>();
     }
     
 

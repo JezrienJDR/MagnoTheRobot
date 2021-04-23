@@ -12,10 +12,16 @@ public class Snake : MonoBehaviour
     public float velocityThreshold;
     // Start is called before the first frame update
 
+    private AudioSource hurtSound;
+    private AudioSource deathSound;
+
     private void Awake()
     {
         animr = GetComponent<Animator>();
         mat = GetComponentInChildren<SkinnedMeshRenderer>().material;
+
+        hurtSound = GetComponents<AudioSource>()[0];
+        deathSound = GetComponents<AudioSource>()[1];
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -26,10 +32,12 @@ public class Snake : MonoBehaviour
             if(health <= 0)
             {
                 animr.SetBool("die", true);
+                deathSound.Play();
             }
             else
             {
                 animr.SetBool("hurt", true);
+                hurtSound.Play();
             }
         }
     }
@@ -41,6 +49,7 @@ public class Snake : MonoBehaviour
 
     public void Death()
     {
+        FindObjectOfType<MusicManager>().StartEndMusic();
         StartCoroutine("DeathFade");
     }
 
