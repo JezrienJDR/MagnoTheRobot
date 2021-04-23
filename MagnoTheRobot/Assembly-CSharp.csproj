@@ -56,10 +56,13 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\MetalItem.cs" />
     <Compile Include="Assets\Scripts\SimpleCameraController.cs" />
     <Compile Include="Assets\Scripts\Magno.cs" />
     <Compile Include="Assets\magnCons.cs" />
-    <Compile Include="Assets\Scripts\MetalItem.cs" />
+    <Compile Include="Assets\Scripts\Door.cs" />
+    <Compile Include="Assets\Scripts\WeightButton.cs" />
+    <Compile Include="Assets\Scripts\PuzzleController1.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

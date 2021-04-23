@@ -59,7 +59,7 @@ public class Magno : MonoBehaviour
         }
         if(turnSpeed == 0)
         {
-            turnSpeed = 180;
+            turnSpeed = 250;
         }
         if(lookSpeed == 0)
         {
@@ -96,26 +96,29 @@ public class Magno : MonoBehaviour
 
 
         animr.SetBool("air", !onGround);
-        Debug.Log(onGround);
+        //Debug.Log(onGround);
     }
 
     private void ApplyMotion()
     {
-        if(forward)
+        if (onGround)
         {
-            transform.position += transform.forward * Time.deltaTime * walkSpeed;
-        }        
-        else if(backward)
-        {
-            transform.position += transform.forward * Time.deltaTime * -walkSpeed;
-        }
-        else if(left)
-        {
-            transform.position += transform.right * Time.deltaTime * -walkSpeed;
-        }
-        else if(right)
-        {
-            transform.position += transform.right * Time.deltaTime * walkSpeed;
+            if (forward)
+            {
+                transform.position += transform.forward * Time.deltaTime * walkSpeed;
+            }
+            else if (backward)
+            {
+                transform.position += transform.forward * Time.deltaTime * -walkSpeed;
+            }
+            else if (left)
+            {
+                transform.position += transform.right * Time.deltaTime * -walkSpeed;
+            }
+            else if (right)
+            {
+                transform.position += transform.right * Time.deltaTime * walkSpeed;
+            }
         }
 
         animr.SetBool("walkForward", forward);
