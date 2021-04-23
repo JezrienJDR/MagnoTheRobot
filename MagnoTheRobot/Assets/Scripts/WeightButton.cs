@@ -46,7 +46,7 @@ public class WeightButton : MonoBehaviour
         for (int i = 0; i < 15; i++)
         {
             button.localPosition += moveVector;
-            mat.SetColor("_Color", Color.Lerp(Color.red * 1.5f, Color.green * 1.5f, 0.0667f * i));
+            mat.SetColor("_Color", Color.Lerp(Color.red * 1.1f, Color.green * 1.1f, 0.0667f * i));
             yield return new WaitForSeconds(0.01f);
         }
     }
@@ -59,7 +59,7 @@ public class WeightButton : MonoBehaviour
         for (int i = 0; i < 15; i++)
         {
             button.localPosition += moveVector;
-            mat.SetColor("_Color", Color.Lerp(Color.green * 1.5f, Color.red * 1.5f, 0.0667f * i));
+            mat.SetColor("_Color", Color.Lerp(Color.green * 1.1f, Color.red * 1.1f, 0.0667f * i));
             yield return new WaitForSeconds(0.01f);
         }
     }
@@ -69,7 +69,7 @@ public class WeightButton : MonoBehaviour
     {
         puzzleCon = FindObjectOfType<PuzzleController1>();
         mat = button.GetComponent<MeshRenderer>().material;
-        mat.SetColor("_Color", Color.red * 1.5f);
+        mat.SetColor("_Color", Color.red * 1.1f);
         numObjects = 0;
     }
 

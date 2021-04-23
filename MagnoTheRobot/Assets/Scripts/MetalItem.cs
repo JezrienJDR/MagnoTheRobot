@@ -6,6 +6,7 @@ public class MetalItem : MonoBehaviour
 {
     public float mass;
     private Material mat;
+    public MeshRenderer mesh;
     private Rigidbody rb;
     private bool isTarget;
     private int id;
@@ -13,7 +14,30 @@ public class MetalItem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         mat = GetComponent<MeshRenderer>().material;
+
+        if (mat == null)
+        {
+            mat = mesh.material;
+        }
+
+        id = Random.Range(1, 9001);
+        rb = GetComponent<Rigidbody>();
+
+        mass = rb.mass;
+    }
+
+    private void Awake()
+    {
+
+        mat = GetComponent<MeshRenderer>().material;
+
+        if (mat == null)
+        {
+            mat = mesh.material;
+        }
+
         id = Random.Range(1, 9001);
         rb = GetComponent<Rigidbody>();
 
