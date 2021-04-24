@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class Magno : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class Magno : MonoBehaviour
     public LayerMask groundMask;
     private Animator animr;
     private Camera cam;
-
+    private AudioSource audioSrc;
 
     // Movement Control Bools
     private bool forward;
@@ -39,6 +40,8 @@ public class Magno : MonoBehaviour
     public float basePushForce;
     public float basePullForce;
 
+    public GameObject pauseMenu;
+
     // Line Renderer
     private LineRenderer line;
     private Material mat;
@@ -55,6 +58,8 @@ public class Magno : MonoBehaviour
 
         line = GetComponent<LineRenderer>();
         mat = line.material;
+
+        audioSrc = GetComponent<AudioSource>();
     }
 
     // Start is called before the first frame update
@@ -173,12 +178,12 @@ public class Magno : MonoBehaviour
         {
             Vector3 f = Vector3.Normalize(transform.position - target.transform.position) * magnitude;
 
-            target.ApplyForce(f);
+            target.ApplyForce(f * Time.deltaTime);
         }
         else if(mass < target.GetMass())
         {
             Vector3 f = Vector3.Normalize(target.transform.position - transform.position) * magnitude;
-            f.Scale(new Vector3(400, 60, 400));
+            f.Scale(new Vector3(400, 60, 400) * Time.deltaTime);
 
             rb.AddForce(f);
         }
@@ -272,6 +277,9 @@ public class Magno : MonoBehaviour
     }
     public void OnPause(InputValue val)
     {
+        pauseMenu.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
+        Time.timeScale = 0;
 
     }
     public void OnPush(InputValue val)
@@ -281,11 +289,16 @@ public class Magno : MonoBehaviour
         {
             pushing = true;
             mat.SetFloat("_Dir", -1);
+            audioSrc.Play();
         }
         else
         {
             pushing = false;
             pushForce = 0.0f;
+            if (!pulling)
+            {
+                audioSrc.Stop();
+            }
         }
            
     }
@@ -295,11 +308,16 @@ public class Magno : MonoBehaviour
         {
             pulling = true;
             mat.SetFloat("_Dir", 1);
+            audioSrc.Play();
         }
         else
         {
             pulling = false;
             pullForce = 0.0f;
+            if(!pushing)
+            {
+                audioSrc.Stop();
+            }
         }
     }
     public void OnLock(InputValue val)

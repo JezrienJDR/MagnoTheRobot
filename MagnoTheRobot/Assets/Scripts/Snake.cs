@@ -31,6 +31,7 @@ public class Snake : MonoBehaviour
             health--;
             if(health <= 0)
             {
+                FindObjectOfType<GreatMonolith>().transform.position = new Vector3(-330, 201, 316);
                 animr.SetBool("die", true);
                 deathSound.Play();
             }

@@ -10,6 +10,8 @@ public class MusicManager : MonoBehaviour
 
     private bool fightStarted;
 
+
+
     public void StartFightMusic()
     {
         Debug.Log("StarFightMusic function called!");
@@ -19,6 +21,8 @@ public class MusicManager : MonoBehaviour
     public void StartEndMusic()
     {
         StartCoroutine("endStart");
+
+        DontDestroyOnLoad(gameObject);
     }
 
     IEnumerator fightStart()
